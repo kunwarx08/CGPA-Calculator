@@ -1,5 +1,5 @@
 import java.util.*;  
-class cgpagrade{  
+class cgpagrade{ 
 
     public static int calculateGradePoint(int marks) {
         if (marks >= 90 && marks <= 100) {
@@ -18,8 +18,31 @@ class cgpagrade{
             return 4;
         } else {
             // For marks below 40, you can define a suitable grade point.
-            // For simplicity, we'll return -1 for such cases.
-            return -1;
+            // For simplicity, we'll return 0 for such cases.
+            return 0;
+        }
+    }
+
+
+    public static int practicalGradePoint(int marks) {
+        if (marks >= 45 && marks <= 50) {
+            return 10;
+        } else if (marks >= 40 && marks < 45) {
+            return 9;
+        } else if (marks >= 35 && marks < 40) {
+            return 8;
+        } else if (marks >= 30 && marks < 35) {
+            return 7;
+        } else if (marks >= 25 && marks < 30) {
+            return 6;
+        } else if (marks >= 20 && marks < 25) {
+            return 5;
+        } else if (marks >= 16 && marks < 20) {
+            return 4;
+        } else {
+            // For marks below 16, user failed in internal of that subject.
+            // For simplicity, we'll return 0 for such cases.
+            return 0;
         }
     }
 
@@ -31,12 +54,15 @@ class cgpagrade{
         Scanner sc = new Scanner(System.in); 
         System.out.println("Enter Number of Theory Subjects:");
          int numSubjects = sc.nextInt(); 
+         
 
         //declaration of two arrays respectively of size of number of subjects
          int[] marksArray = new int[numSubjects]; 
          int[] gradePointsArray = new int[numSubjects];
+         double totalCredits = 0;
+         double totalGradePoint = 0;
 
-         System.out.println("Enter Marks of Theory Subjects out of 100");  
+         System.out.println("Enter Marks of Theory Subjects (out of 100)");  
          for(int i=0; i<numSubjects; i++)  
          {   
          System.out.println("Enter marks of subject "+(i+1)+":");
@@ -44,12 +70,22 @@ class cgpagrade{
          gradePointsArray[i] = calculateGradePoint(marksArray[i]);
          }  
 
+         int[] creditArray = new int[numSubjects];
+         for(int i=0; i<numSubjects; i++)  
+         {   
+         System.out.println("Enter credits of subject "+(i+1)+":");
+         creditArray[i]=sc.nextInt();  
+         totalGradePoint += gradePointsArray[i] * creditArray[i];
+         totalCredits += creditArray[i];
+         }
+
+
           
          for(int i=0; i<numSubjects; i++)  
          {      
-         System.out.println("Marks of Theory Subject: "+(i+1)+" = "+ marksArray[i]+" Grade Point: "+gradePointsArray[i]); 
+         System.out.println("Marks of Theory Subject: "+(i+1)+" = "+ marksArray[i]+" Grade Point: "+gradePointsArray[i]+" Credit: "+creditArray[i]); 
          }
-         sc.close();
+         //sc.close();
 
 
 
@@ -61,24 +97,95 @@ class cgpagrade{
 
     
      
-    //  Scanner scan=new Scanner(System.in);
-    //  System.out.println("Enter Number of Practical Subjects:");
-    //  int x = scan.nextInt(); 
+     Scanner scan=new Scanner(System.in);
+     System.out.println("Enter Number of Practical Subjects:");
+     int pracSubjects = scan.nextInt(); 
 
-    //  int[] subjectp = new int[10];  
-    //  System.out.println("Enter Marks of Practical Subjects");  
-    //  for(int i=1; i<=x; i++)  
-    //  {   
-    //  subjectp[i]=scan.nextInt();  
-    //  }  
+     int[] pmarksArray = new int[pracSubjects];  
+     int[] pracGradeArray = new int [pracSubjects];
 
-      
-    //  for(int i=1; i<=x; i++)  
-    //  {      
-    //  System.out.println("Marks of Pracical Subject: "+i+" = "+ subjectp[i]); 
-    //  }
+
+     System.out.println("Enter Marks of Practical Subjects (out of 50)");  
+     for(int i=0; i<pracSubjects; i++)  
+     {   
+     System.out.println("Enter marks of practoical subject "+(i+1)+":");
+     pmarksArray[i]=scan.nextInt();  
+     pracGradeArray[i] = practicalGradePoint(pmarksArray[i]);
+     }  
+
+       int[] pcreditArray = new int[pracSubjects];
+         for(int i=0; i<pracSubjects; i++)  
+         {   
+         System.out.println("Enter credits of practical subject "+(i+1)+":");
+         pcreditArray[i]=sc.nextInt();
+          totalGradePoint += pracGradeArray[i] * pcreditArray[i];
+          totalCredits += pcreditArray[i];  
+         }
+
+     for(int i=0; i<pracSubjects; i++)  
+     {      
+     System.out.println("Marks of Pracical Subject: "+(i+1)+" = "+ pmarksArray[i]+" Grade Point= "+pracGradeArray[i]+" Credit: "+ pcreditArray[i] ); 
+     }
     
+     Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Did you do a minor project in this semester? (yes/no): ");
+        String projectChoice = scanner.next();
+        if (projectChoice.equalsIgnoreCase("yes")) {
+            System.out.print("Enter the marks for your minor project (out of 100): ");
+            int projectMarks = scanner.nextInt();
+            int projectGradePoint = calculateGradePoint(projectMarks);
+            int projectCredit=1; // credit of minor project is 1
+            totalGradePoint += projectGradePoint * projectCredit; // Add input credit variable for generalised project
+            totalCredits += projectCredit;
+
+            if (projectGradePoint != 0) {
+                System.out.println("Your minor project marks: " + projectMarks);
+                System.out.println("Your minor project grade point: " + projectGradePoint);
+            } else {
+                System.out.println("Invalid marks entered for the minor project.");
+            }
+        } else if (projectChoice.equalsIgnoreCase("no")) {
+            int projectMarks = 0;
+            int projectGradePoint = 0;
+            System.out.println("No minor project done. Marks: " + projectMarks + ", Grade Point: " + projectGradePoint);
+        } else {
+            System.out.println("Invalid choice. Please enter 'yes' or 'no'.");
+        }
+
+
+
+        Scanner scanner1 = new Scanner(System.in);
+
+        System.out.print("Do you Mentoring Subject in this semester with credit? (yes/no): ");
+        String mentoringChoice = scanner1.next();
+        int mpdCredit=1;
+        if (mentoringChoice.equalsIgnoreCase("yes")) {
+            System.out.print("Enter the marks for your minor project (out of 100): ");
+            int mentoringMarks = scanner1.nextInt();
+            int mentoringGradePoint = calculateGradePoint(mentoringMarks);
+
+            totalGradePoint += mentoringGradePoint * mpdCredit; // Add input credit variable for generalised project
+            totalCredits += mpdCredit;
+
+
+            if (mentoringGradePoint != 0) {
+                System.out.println("Your minor project marks: " + mentoringMarks);
+                System.out.println("Your minor project grade point: " + mentoringGradePoint);
+                System.out.println("Your minor project Credit: "+ mpdCredit);
+            } else {
+                System.out.println("Invalid marks entered for the minor project.");
+            }
+        } else if (mentoringChoice.equalsIgnoreCase("no")) {
+            int mentoringMarks = 0;
+            int mentoringGradePoint = 0;
+            System.out.println("No minor project done. Marks: " + mentoringMarks + ", Grade Point: " + mentoringGradePoint);
+        } else {
+            System.out.println("Invalid choice. Please enter 'yes' or 'no'.");
+        }
+
+
+    System.out.println("YOUR CGPA is::  "+ (totalGradePoint/totalCredits));
 
     } 
 }
