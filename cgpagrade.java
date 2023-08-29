@@ -135,7 +135,7 @@ class cgpagrade{
             System.out.print("Enter the marks for your minor project (out of 100): ");
             int projectMarks = scanner.nextInt();
             int projectGradePoint = calculateGradePoint(projectMarks);
-            System.out.print("Enter the Credits for your Minor/Major project: ");
+            System.out.print("Enter the Credits for your Minor(1)/Major project(3): ");
             int projectCredit = scanner.nextInt();
             totalGradePoint += projectGradePoint * projectCredit; // Add input credit variable for generalised project
             totalCredits += projectCredit;
@@ -167,7 +167,7 @@ class cgpagrade{
             System.out.print("Enter the marks for your mpd (out of 100): ");
             int mentoringMarks = scanner1.nextInt();
             int mentoringGradePoint = calculateGradePoint(mentoringMarks);
-            System.out.print("Enter the Credits for your Mentoring Subject: ");
+            System.out.print("Enter the Credits for your Mentoring Subject(1 if you are in even semester else - 0) : ");
             int mpdCredit = scanner.nextInt();
 
             totalGradePoint += mentoringGradePoint * mpdCredit; // Add input credit variable for generalised project
